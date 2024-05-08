@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axiosInstance from "../utils/axios";
+import { useNavigate } from "react-router-dom";
 // const continents = []
 const continents = [
   { key: 1, value: "seoul" },
@@ -13,11 +15,13 @@ function PostWrite() {
   // const [product, setProduct] = useState({});
   const [product, setProduct] = useState({
     title: "",
-    discription: "",
+    description: "",
     price: 0,
     continents: 1,
     image: [],
   });
+
+  const navigate = useNavigate();
 
   function handleChange(e) {
     // e대신 event로도 자주 쓰임
@@ -37,17 +41,26 @@ function PostWrite() {
   }
 
   // function handleSubmit(){}
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     // e대신 event로도 자주 쓰임
     // event.target.value , e.target.value
     // e.target.value 자체가 input창에 입력되는 모든 text들을 의미함.
     e.preventDefault(); // handleSubmit이 엔터치는순간 새창으로 이동하는 기본값을 가지고있음...? 그걸 막아주는 역할 (페이지가 이동하지 않고 새로고침만 되도록?)
     alert("입력");
+    const body = {
+      ...product,
+    };
+    try {
+      await axiosInstance.post("/products", body);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <section>
       <h2>자료입력</h2>
-      {product.title} / {product.discription}
+      {product.title} / {product.description}
       {/* <form action="request.php"></form> 
       => 페이지가 바뀌는 형식임???
       */}
@@ -70,16 +83,16 @@ function PostWrite() {
 
         <div className="mb-4">
           {/* label은 inline tag임 -> block처리 해줘야 함, tailwind css cheat sheet가서 block처리하는방법 확인하기 */}
-          <label htmlFor="discription" className="mb-3 block">
+          <label htmlFor="description" className="mb-3 block">
             설명
           </label>
           <input
             type="text"
-            id="discription" // htmlFor랑 id값을 매치해줘야함!
-            name="discription"
+            id="description" // htmlFor랑 id값을 매치해줘야함!
+            name="description"
             className="w-full px-4 py-2 border rounded-md"
             onChange={handleChange}
-            value={product.discription}
+            value={product.description}
             // value는 나중에 작성해줬음.. 이부분 다시한번 짚고 넘어가보기
           />
         </div>
