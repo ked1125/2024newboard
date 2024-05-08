@@ -29,7 +29,11 @@ productRouter.get("/", async (req, res) => {
       .sort([[sortBy, order]])
       .skip(skip)
       .limit(limit);
-    return res.status(200).send({ products });
+    //요기부터 중요해요!!!@@@@@@
+    const productsTotal = await Product.countDocuments();
+    const hasMore = skip + limit < productsTotal ? true : false;
+    return res.status(200).send({ products, hasMore });
+    // return res.status(200).send({ products, hasMore });
   } catch (error) {
     console.log(error);
   }
