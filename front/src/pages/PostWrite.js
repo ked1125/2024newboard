@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 // const continents = []
 const continents = [
   { key: 1, value: "seoul" },
-  { key: 2, value: "busan" },
-  { key: 3, value: "gangwon" },
+  { key: 2, value: "pusan" },
+  { key: 3, value: "kangwon" },
   { key: 4, value: "suwon" },
   { key: 5, value: "daegu" },
 ];
