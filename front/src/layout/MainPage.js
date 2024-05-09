@@ -3,6 +3,7 @@ import axiosInstance from "../utils/axios";
 import CardItem from "../Components/CardItem";
 import { continents, prices } from "../utils/filterData";
 import CheckBox from "../Components/CheckBox";
+import SearchInp from "../Components/SearchInp";
 
 function MainPage() {
   // useStateSnippet
@@ -16,6 +17,8 @@ function MainPage() {
     continents: [],
     price: [],
   });
+
+  const [searchForm, setSearchForm] = useState("");
 
   // const fetchProducts = ({})=>{}
   const fetchProducts = async ({
@@ -96,15 +99,21 @@ function MainPage() {
     setSkip(0);
   }
 
+  function handleSearch(e) {
+    console.log(e.target.value);
+    setSearchForm(e.target.value);
+    // setSearchForm(e.target.value); // 이거 안써주면 콘솔에는 찍히는데, 인풋창에안올라옴
+  }
+
   return (
     <section>
       <h2>글 리스트</h2>
 
       {/* filter */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 mb-4">
         {/* <div className="w-1/2">checkbox</div> */}
         {/* <div className="w-full">checkbox</div> */}
-        <div className="w-full py-2">
+        <div className="w-full px-2">
           <h3>지역선택</h3>
           {/* <div className="grid grid-cols-3 gap-4 sm:grid-cols-5"> */}
           {/* grid로 반응형만들기!!!😽 */}
@@ -156,7 +165,9 @@ function MainPage() {
       </div>
 
       {/* search */}
-      <div className="flex justify-end mb-3">search</div>
+      <div className="flex justify-end mb-3">
+        <SearchInp searchForm={searchForm} onSearch={handleSearch} />
+      </div>
 
       {/* products */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 mb-3">
