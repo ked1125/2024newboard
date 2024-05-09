@@ -71,7 +71,29 @@ function MainPage() {
     setSkip(Number(skip) + Number(limit));
   }
   function handlefilters(newFilteredData) {
-    console.log(newFilteredData);
+    // console.log(newFilteredData);
+
+    const newFilters = { ...filters };
+    // newFilters.continents = newFilteredData;
+    newFilters["continents"] = newFilteredData;
+
+    showFilterResult(newFilters);
+    setFilters(newFilters);
+  }
+
+  function showFilterResult(filters) {
+    // function showFilterResult(newFilters) {
+
+    console.log(filters);
+    const body = {
+      skip: 0,
+      limit,
+      // loadMore: true,
+      // filters: filters
+      filters,
+    };
+    fetchProducts(body);
+    setSkip(0);
   }
 
   return (
@@ -97,6 +119,28 @@ function MainPage() {
             <div className="w-[100%] bg-slate-200">text</div>
             <div className="w-[100%] bg-slate-200">text</div>
           </div> */}
+
+          {/* ============강사님꺼 복사구간 start */}
+          {/* <div className="flex gap-4 flex-wrap">
+            <div className="w-[20%] bg-slate-200">text</div>
+            <div className="w-[20%] bg-slate-200">text</div>
+            <div className="w-[20%] bg-slate-200">text</div>
+            <div className="w-[20%] bg-slate-200">text</div>
+            <div className="w-[20%] bg-slate-200">text</div>
+            <div className="w-[20%] bg-slate-200">text</div>
+            <div className="w-[20%] bg-slate-200">text</div>
+            <div className="w-[20%] bg-slate-200">text</div>
+          </div> */}
+
+          {/* <div className="grid grid-cols-3 gap-4 sm:grid-cols-5">
+            <div className="w-[100%] bg-slate-200">text</div>
+            <div className="w-[100%] bg-slate-200">text</div>
+            <div className="w-[100%] bg-slate-200">text</div>
+            <div className="w-[100%] bg-slate-200">text</div>
+            <div className="w-[100%] bg-slate-200">text</div>
+            <div className="w-[100%] bg-slate-200">text</div>
+          </div> */}
+          {/* ============강사님꺼 복사구간 end */}
 
           <div>
             <CheckBox
