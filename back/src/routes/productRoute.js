@@ -22,6 +22,7 @@ productRouter.get("/", async (req, res) => {
   const skip = req.query.skip ? Number(req.query.skip) : 0;
   const sortBy = req.query.sortBy ? req.query.sortBy : "_id";
   const order = req.query.order ? req.query.order : "desc";
+  const search = req.query.searchForm;
 
   let findArgs = {};
 
@@ -30,6 +31,14 @@ productRouter.get("/", async (req, res) => {
     if (req.query.filters[key].length > 0) {
       findArgs[key] = req.query.filters[key];
     }
+  }
+
+  // console.log(findArgs);
+  console.log(search);
+
+  if (search) {
+    findArgs["$text"] = { $search: search };
+    // findArgs["$text"] = {$search:search}; &search는 몽구스에서 쓰는 search
   }
 
   console.log(findArgs);

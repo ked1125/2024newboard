@@ -4,6 +4,7 @@ import CardItem from "../Components/CardItem";
 import { continents, prices } from "../utils/filterData";
 import CheckBox from "../Components/CheckBox";
 import SearchInp from "../Components/SearchInp";
+import RadioBox from "../Components/RadioBox";
 
 function MainPage() {
   // useStateSnippet
@@ -26,6 +27,7 @@ function MainPage() {
     limit,
     loadMore = false,
     filters = {},
+    searchForm = "",
   }) => {
     // ==== 인자에 대한 설명 3 ) 같은 함수명이니까!!! 여기에 있는 매개변수로 바뀐다(들어간다,대입된다...?)??? 함수에 있던 인자가.........
     const params = {
@@ -34,12 +36,13 @@ function MainPage() {
       // skip:skip,
       limit,
       filters,
+      searchForm,
     };
     try {
       // await axiosInstance.get("/products?skip=0,limit=4",{}) 요런 형태라고 보면 된다
       // await axiosInstance.get("/products", { params }); // 원래 이형태엿는데 아직 백에서 params받을 준비 안되어있어서 일단 삭제했음
       const res = await axiosInstance.get("/products", { params });
-      console.log(res.data);
+      console.log(res.data.products);
 
       if (loadMore) {
         setProducts([...products, ...res.data.products]);
@@ -69,19 +72,38 @@ function MainPage() {
       limit,
       loadMore: true,
       filters,
+      searchForm,
     };
     fetchProducts(body);
     setSkip(Number(skip) + Number(limit));
   }
-  function handlefilters(newFilteredData) {
+  function handlefilters(newFilteredData, cate) {
     // console.log(newFilteredData);
 
     const newFilters = { ...filters };
     // newFilters.continents = newFilteredData;
-    newFilters["continents"] = newFilteredData;
+    // newFilters["continents"] = newFilteredData;
+    newFilters[cate] = newFilteredData;
+    if (cate === "price") {
+      const priceValues = handlePrice(newFilteredData);
+      newFilters[cate] = priceValues;
+    }
 
     showFilterResult(newFilters);
     setFilters(newFilters);
+  }
+
+  function handlePrice(value) {
+    let array = [];
+
+    for (let key in prices) {
+      //for -in문
+      if (prices[key]._id === parseInt(value, 10)) {
+        // 10진법
+        array = prices[key].array;
+      }
+    }
+    return array;
   }
 
   function showFilterResult(filters) {
@@ -94,6 +116,7 @@ function MainPage() {
       // loadMore: true,
       // filters: filters
       filters,
+      searchForm,
     };
     fetchProducts(body);
     setSkip(0);
@@ -101,8 +124,17 @@ function MainPage() {
 
   function handleSearch(e) {
     console.log(e.target.value);
-    setSearchForm(e.target.value);
+    // setSearchForm(e.target.value);
     // setSearchForm(e.target.value); // 이거 안써주면 콘솔에는 찍히는데, 인풋창에안올라옴
+    const body = {
+      skip: 0,
+      limit,
+      filters,
+      searchForm: e.target.value,
+    };
+    fetchProducts(body);
+    setSkip(0);
+    setSearchForm(e.target.value);
   }
 
   return (
@@ -156,7 +188,16 @@ function MainPage() {
               continents={continents}
               checkedContinents={filters.continents}
               onFilters={(filters) => {
-                handlefilters(filters);
+                handlefilters(filters, "continents");
+              }}
+            />
+          </div>
+          <div>
+            <RadioBox
+              prices={prices}
+              checkedPrice={filters.price}
+              onFilters={(filters) => {
+                handlefilters(filters, "price");
               }}
             />
           </div>

@@ -30,6 +30,20 @@ const ProductSchema = mongoose.Schema({
   },
 });
 
+ProductSchema.index(
+  {
+    title: "text",
+    description: "text",
+  },
+  {
+    weights: {
+      // 우선순위?
+      title: 5,
+      description: 1,
+    },
+  }
+);
+
 // mongoose.model("모델명",Schema명??);
 // const Product = mongoose.model("product", ProductSchema);
 const Product = mongoose.model("product", ProductSchema);
