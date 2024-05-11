@@ -140,7 +140,7 @@ function MainPage() {
   return (
     <section>
       <h2>글 리스트</h2>
-
+      {filters.price}
       {/* filter */}
       <div className="flex gap-3 mb-4">
         {/* <div className="w-1/2">checkbox</div> */}

@@ -29,7 +29,16 @@ productRouter.get("/", async (req, res) => {
   for (let key in req.query.filters) {
     // for -in 문
     if (req.query.filters[key].length > 0) {
-      findArgs[key] = req.query.filters[key];
+      if (key === "price") {
+        findArgs[key] = {
+          $gte: req.query.filters[key][0],
+          // great then equal? 크거나 같을 때 (이상일때)
+          $lte: req.query.filters[key][1],
+          // less then equal? 작거나 같을 때 (이하일때)
+        };
+      } else {
+        findArgs[key] = req.query.filters[key];
+      }
     }
   }
 
