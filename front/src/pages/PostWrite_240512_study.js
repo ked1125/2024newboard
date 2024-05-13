@@ -28,13 +28,27 @@ function PostWrite() {
     // event.target.value , e.target.value
     // e.target.value 자체가 input창에 입력되는 모든 text들을 의미함.
     const { name, value } = e.target;
+    // input태그에 붙어있는 id,name,value등을 전부 e.target.___로 쓸 수 있음
+    // 구조분해할당 !!!!!!
+    // 원래는 const name = e.target.name;
+    // const value = e.target.value;인데
+    // 묶어서 const{name,value} = e.target; 으로 써줄 수 있음 (구조분해할당)
     console.log(value, name);
     // console.log(e.target.value, e.target.name);
-    setProduct((prevState) => {
+    setProduct(() => {
+      // 인풋창에서 받아지는 e.target~얘를 setProduct로 product값에 저장
+
+      // setProduct((prevState) => {
       return {
         // ...prevState,[name]: value
-        ...prevState,
+        // ...prevState,
+        ...product,
         [name]: value,
+
+        // [name]이 동적으로 바뀜...? title이 될 수도 있고, description이 될 수도 있고..
+        // [name]: 대괄호는 JavaScript에서 '계산된 속성 이름(computed property name)'을 사용하기 위한 문법입니다.
+        // 이를 통해 변수의 값을 속성 이름으로 사용할 수 있습니다. 예를 들어, name 변수의 값이 "title"이라면,
+        // [name]: value는 { title: value }와 같은 객체를 생성합니다. 이는 name 변수의 값에 따라 동적으로 속성 이름을 바꿀 수 있음을 의미합니다.
       };
     });
     // setProduct(()=>{return})
@@ -77,6 +91,7 @@ function PostWrite() {
           name="title" // name값은 for문서에서 값을 담아서 전달해주는거라고..?:/??
           className="w-full px-4 py-2 border rounded-md"
           onChange={handleChange}
+          //   onChange는 이벤트고 (함수도맞긴함?;), handleChange가 함수..?:/
           value={product.title}
           // value는 나중에 작성해줬음.. 이부분 다시한번 짚고 넘어가보기
         />
