@@ -33,6 +33,8 @@ const productRouter = require("./routes/productRoute");
 
 app.use(cors());
 
+app.use("/uploads", express.static("uploads"));
+
 dotenv.config();
 
 const server = async function () {

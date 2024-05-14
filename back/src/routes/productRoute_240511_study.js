@@ -29,9 +29,10 @@ productRouter.get("/", async (req, res) => {
   const skip = req.query.skip ? Number(req.query.skip) : 0;
   //   있으면 좌측항 실행, 없으면 우측항 실행
   const sortBy = req.query.sortBy ? req.query.sortBy : "_id";
-  //   웹 애플리케이션에서 데이터를 정렬하기 위한 쿼리의 일부분
+  // 웹 애플리케이션에서 데이터를 정렬하기 위한 쿼리의 일부분
   // 클라이언트가 정렬 기준을 지정할 수 있도록 하는 매개변수
   const order = req.query.order ? req.query.order : "desc";
+  // desc -> 내림차순
   const search = req.query.searchForm;
 
   let findArgs = {};

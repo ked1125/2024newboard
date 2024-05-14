@@ -29,7 +29,7 @@ function MainPage() {
     limit,
     loadMore = false, // handleLoadMore함수 실행 이후로는 true값으로 바뀐 후 실행될거임 함수
     filters = {}, // continents:[1]들어간상태
-    // price는 [0,199]로 ㄷㄹ어감....ㅜㅜ
+    // price는 [0,199]로 들어감....ㅜㅜ
     searchForm = "", // 일단무시
   }) => {
     // ==== 인자에 대한 설명 3 ) 같은 함수명이니까!!! 여기에 있는 매개변수로 바뀐다(들어간다,대입된다...?)??? 함수에 있던 인자가.........
@@ -40,7 +40,7 @@ function MainPage() {
       // skip:skip, => 이거 바로위에서 인자에서 가져온거임!! 위에서 선언해준거 말고!!
       limit,
       filters, // continents:[1]들어간상태
-      // price는 [0,199]로 ㄷㄹ어감....ㅜㅜ
+      // price는 [0,199]로 들어감....ㅜㅜ
       searchForm,
     };
     try {
