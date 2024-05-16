@@ -118,19 +118,30 @@ productRouter.get("/", async (req, res) => {
   const limit = req.query.limit ? Number(req.query.limit) : 20;
   const skip = req.query.skip ? Number(req.query.skip) : 0;
   const sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+  // 정렬
   const order = req.query.order ? req.query.order : "desc";
+  // desc가 내림차순.. asc가 오름차순
+  // 내림차순은 최근 등록 게시물이 위로 올라옴
   const search = req.query.searchForm;
 
   let findArgs = {};
 
   for (let key in req.query.filters) {
+    console.log(req.query.filters);
+    // if (req.query.filters[key].length > 0) {
     if (req.query.filters[key].length > 0) {
+      // object에 접근할 때 배열.키값 으로도 접근가능하고,
+      // 배열["키값"]의 형태로도 접근 가능하다고 하심
       if (key === "price") {
+        // => filters["price"]로 접근한 형태라고 생각하면됨
+        // -> 동일 표현 filters.price
         findArgs[key] = {
           $gte: req.query.filters[key][0],
+          // filters[key] 자체를 한 덩어리로 볼 것 ? - for...in문에서 key를 써먹어야하니까?
           $lte: req.query.filters[key][1],
         };
       } else {
+        // key === "continents"
         findArgs[key] = req.query.filters[key];
       }
     }
@@ -149,6 +160,7 @@ productRouter.get("/", async (req, res) => {
     const productsTotal = await Product.countDocuments(findArgs);
     const hasMore = skip + limit < productsTotal ? true : false;
     return res.status(200).send({ products, hasMore });
+    // hasMore는 -T/F boolean값
   } catch (error) {
     console.log(error);
   }

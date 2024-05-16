@@ -174,7 +174,7 @@ const continents = [
 function PostWrite() {
   const [product, setProduct] = useState({
     title: "",
-    description: "",
+    description: "잉?",
     price: 0,
     continents: 1,
     images: [],
@@ -184,10 +184,13 @@ function PostWrite() {
 
   function handelChange(e) {
     const { name, value } = e.target;
+    // const name = e.target.name
+    // const value = e.target.value
     console.log(value, name);
-    setProduct((prevState) => {
+    setProduct((prevState1) => {
+      // set___((첫번째 인자값)=>{}) // 첫번째 인자값에 들어오는게 이전의 상태값임.
       return {
-        ...prevState,
+        ...prevState1,
         [name]: value,
       };
     });
@@ -196,11 +199,11 @@ function PostWrite() {
   async function handelSubmit(e) {
     e.preventDefault();
     // 엔터 막는거임. 기본기능 막음
-    const body = {
+    const body3 = {
       ...product,
     };
     try {
-      await axiosInstance.post("/products", body);
+      await axiosInstance.post("/products", body3);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -226,10 +229,14 @@ function PostWrite() {
           <input
             type="text"
             id="title"
+            // id는 label이랑 동일해야함
             name="title"
+            // name은 handleChange에서 써먹을거임 -> 네개 다 같은함수이름쓰고있으니까 식별하려고
             className="w-full px-4 py-2 border rounded-md"
             onChange={handelChange}
+            // 변화하는값 감지하는거 onChange
             value={product.title}
+            // value => 입력된 값 ... 보여지는거
           />
         </div>
         <div className="mb-4">
@@ -243,6 +250,7 @@ function PostWrite() {
             className="w-full px-4 py-2 border rounded-md"
             onChange={handelChange}
             value={product.description}
+            // value에 초기값을 주는 과정................?
           />
         </div>
         <div className="mb-4">

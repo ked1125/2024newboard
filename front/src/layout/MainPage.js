@@ -42,6 +42,8 @@ function MainPage() {
       // await axiosInstance.get("/products?skip=0,limit=4",{}) 요런 형태라고 보면 된다
       // await axiosInstance.get("/products", { params }); // 원래 이형태엿는데 아직 백에서 params받을 준비 안되어있어서 일단 삭제했음
       const res = await axiosInstance.get("/products", { params });
+      console.log(res.data);
+      console.log(res.data.hasMore);
       console.log(res.data.products);
 
       if (loadMore) {
@@ -101,6 +103,7 @@ function MainPage() {
       if (prices[key]._id === parseInt(value, 10)) {
         // 10진법
         array = prices[key].array;
+        // array = prices.array?
       }
     }
     return array;
